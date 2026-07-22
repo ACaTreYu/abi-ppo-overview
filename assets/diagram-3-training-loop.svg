@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 888" role="img" aria-label="Training loop swimlanes">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .lane-label{font-size:10px;fill:#8A94AD;letter-spacing:2px}
+  .head{font-size:14px;font-weight:700;fill:#E8ECF5}
+  .head-sub{font-size:11px;fill:#98A2B8}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-width:2;stroke-dasharray:5 4}
+  .life{stroke:#26304F;stroke-width:1;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow3)}
+  .lane{fill:rgba(19,24,40,.6);stroke:#232D47;stroke-width:1;stroke-dasharray:2 4}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee{animation:march3 1.2s linear infinite}
+    @keyframes march3{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <filter id="glow3" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1080" height="888" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1079" height="887" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[3/5]</text>
+<text class="ttl" x="84" y="28">TRAINING LOOP — one cycle, top to bottom in time</text>
+
+<g transform="translate(0,48)">
+  <!-- lanes -->
+  <rect class="lane" x="30" y="16" width="230" height="824"/>
+  <rect class="lane" x="290" y="16" width="230" height="824"/>
+  <rect class="lane" x="550" y="16" width="230" height="824"/>
+  <rect class="lane" x="810" y="16" width="230" height="824"/>
+
+  <!-- lifelines -->
+  <line class="life" x1="145" y1="70" x2="145" y2="836"/>
+  <line class="life" x1="405" y1="70" x2="405" y2="836"/>
+  <line class="life" x1="665" y1="70" x2="665" y2="836"/>
+  <line class="life" x1="925" y1="70" x2="925" y2="836"/>
+
+  <!-- headers -->
+  <g>
+    <rect class="node" x="30" y="16" width="230" height="52"/>
+    <text class="head" x="145" y="40" text-anchor="middle">Game server</text>
+    <text class="head-sub" x="145" y="58" text-anchor="middle">live</text>
+  </g>
+  <g>
+    <rect class="node" x="290" y="16" width="230" height="52"/>
+    <text class="head" x="405" y="40" text-anchor="middle">Pipeline</text>
+    <text class="head-sub" x="405" y="58" text-anchor="middle">Python</text>
+  </g>
+  <g>
+    <rect class="node" x="550" y="16" width="230" height="52"/>
+    <text class="head" x="665" y="40" text-anchor="middle">Trainer</text>
+    <text class="head-sub" x="665" y="58" text-anchor="middle">ABI-PPO</text>
+  </g>
+  <g>
+    <rect class="node" x="810" y="16" width="230" height="52"/>
+    <text class="head" x="925" y="40" text-anchor="middle">Model store</text>
+    <text class="head-sub" x="925" y="58" text-anchor="middle">checkpoints</text>
+  </g>
+
+  <!-- event 1: GS self -->
+  <g>
+    <rect class="node" x="45" y="90" width="200" height="80"/>
+    <text class="n-title" x="59" y="116">Play + collect</text>
+    <text class="n-sub" x="59" y="136">bots + humans play</text>
+    <text class="n-sub" x="59" y="155">collector writes .bin</text>
+  </g>
+
+  <!-- event 2: P->S -->
+  <path class="edge" d="M405 200 H150" marker-end="url(#arr3)"/>
+  <text class="elabel" x="277" y="193" text-anchor="middle">Pull experience corpus</text>
+
+  <!-- event 3: P self -->
+  <g>
+    <rect class="node" x="305" y="230" width="200" height="80"/>
+    <text class="n-title" x="319" y="256">Validate headers</text>
+    <text class="n-sub" x="319" y="276">before any wipe</text>
+    <text class="n-sub" x="319" y="295">version · sizes</text>
+  </g>
+
+  <!-- event 4: P->S -->
+  <path class="edge" d="M405 345 H150" marker-end="url(#arr3)"/>
+  <text class="elabel" x="277" y="338" text-anchor="middle">Clean pool · restart collection</text>
+
+  <!-- event 5: P->T -->
+  <path class="edge" d="M405 388 H660" marker-end="url(#arr3)"/>
+  <text class="elabel" x="535" y="381" text-anchor="middle">Train · resume checkpoint</text>
+
+  <!-- event 6: T self (hot) -->
+  <g>
+    <rect class="node hot" x="560" y="410" width="210" height="98"/>
+    <rect class="marquee" x="555" y="405" width="220" height="108"/>
+    <text class="n-title" x="574" y="436">Curriculum training</text>
+    <text class="n-sub" x="574" y="456">reward-ranked selection</text>
+    <text class="n-sub" x="574" y="475">3-phase curriculum</text>
+    <text class="n-sub" x="574" y="494">dual optimizers</text>
+  </g>
+
+  <!-- event 7: T->M (data) -->
+  <path class="edge data" d="M665 543 H920" marker-end="url(#arrData3)"/>
+  <text class="elabel data" x="795" y="536" text-anchor="middle">Checkpoint + policy + normalizer</text>
+
+  <!-- event 8: P self -->
+  <g>
+    <rect class="node" x="305" y="560" width="200" height="80"/>
+    <text class="n-title" x="319" y="586">Sanity gate</text>
+    <text class="n-sub" x="319" y="606">dims · finite weights</text>
+    <text class="n-sub" x="319" y="625">normalizer present</text>
+  </g>
+
+  <!-- event 9: P->S -->
+  <path class="edge" d="M405 683 H150" marker-end="url(#arr3)"/>
+  <text class="elabel" x="277" y="676" text-anchor="middle">Back up · atomic deploy</text>
+
+  <!-- event 10: P->S -->
+  <path class="edge" d="M405 723 H150" marker-end="url(#arr3)"/>
+  <text class="elabel" x="277" y="716" text-anchor="middle">Reload · verify checksums</text>
+
+  <!-- event 11: GS self -->
+  <g>
+    <rect class="node" x="45" y="750" width="200" height="80"/>
+    <text class="n-title" x="59" y="776">New policy live</text>
+    <text class="n-sub" x="59" y="796">plays next cycle</text>
+    <text class="n-sub" x="59" y="815">data feeds back</text>
+  </g>
+</g>
+</svg>

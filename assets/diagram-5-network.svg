@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" role="img" aria-label="Network and observation contract">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-width:2;stroke-dasharray:5 4}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow5)}
+  .node.data{stroke:#5FE3D0}
+  .node.dim{stroke:#26304F}
+  .chip{fill:url(#chk5);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee{animation:march5 1.2s linear infinite}
+    @keyframes march5{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk5" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow5" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1000" height="470" fill="#121828"/>
+<rect x="0.5" y="0.5" width="999" height="469" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[5/5]</text>
+<text class="ttl" x="84" y="28">NETWORK — actor-critic trunks, dual optimizers</text>
+
+<g transform="translate(0,48)">
+  <g>
+    <rect class="node data" x="40" y="178" width="130" height="60"/>
+    <rect class="chip" x="146" y="186" width="14" height="14"/>
+    <text class="n-title" x="54" y="214">obs 356</text>
+  </g>
+
+  <g>
+    <rect class="node hot" x="290" y="90" width="300" height="76"/>
+    <rect class="marquee" x="285" y="85" width="310" height="86"/>
+    <text class="n-title" x="304" y="116">Actor trunk</text>
+    <text class="n-sub" x="304" y="136">356 &#8594; 256 &#8594; 256</text>
+    <text class="n-sub" x="304" y="155">LayerNorm + ReLU</text>
+  </g>
+  <g>
+    <rect class="node" x="290" y="250" width="300" height="76"/>
+    <text class="n-title" x="304" y="276">Critic trunk</text>
+    <text class="n-sub" x="304" y="296">356 &#8594; 256 &#8594; 256</text>
+    <text class="n-sub" x="304" y="315">separate weights</text>
+  </g>
+
+  <g>
+    <rect class="node" x="650" y="40" width="200" height="48"/>
+    <text class="n-title" x="664" y="70">move head &#8594; 9</text>
+  </g>
+  <g>
+    <rect class="node" x="650" y="104" width="200" height="48"/>
+    <text class="n-title" x="664" y="134">fire head &#8594; 2</text>
+  </g>
+  <g>
+    <rect class="node" x="650" y="168" width="200" height="48"/>
+    <text class="n-title" x="664" y="198">aim head &#8594; 128</text>
+  </g>
+  <g>
+    <rect class="node" x="650" y="260" width="200" height="48"/>
+    <text class="n-title" x="664" y="290">value head &#8594; 1</text>
+  </g>
+
+  <g>
+    <rect class="node dim" x="290" y="180" width="180" height="52"/>
+    <text class="n-title" x="304" y="206" fill="#B8C0D4">Adam #1 · actor LR</text>
+  </g>
+  <g>
+    <rect class="node dim" x="290" y="350" width="180" height="52"/>
+    <text class="n-title" x="304" y="376" fill="#B8C0D4">Adam #2 · critic LR</text>
+  </g>
+
+  <!-- obs fan-out -->
+  <path class="edge" d="M170 208 H230 V128 H290" marker-end="url(#arr5)"/>
+  <path class="edge" d="M170 208 H230 V288 H290" marker-end="url(#arr5)"/>
+
+  <!-- actor -> heads -->
+  <path class="edge" d="M590 110 H620 V64 H650" marker-end="url(#arr5)"/>
+  <path class="edge" d="M590 128 H650" marker-end="url(#arr5)"/>
+  <path class="edge" d="M590 146 H620 V192 H650" marker-end="url(#arr5)"/>
+
+  <!-- critic -> value -->
+  <path class="edge" d="M590 288 H620 V284 H650" marker-end="url(#arr5)"/>
+
+  <!-- optimizers -->
+  <path class="edge data" d="M380 166 V180" marker-end="url(#arrData5)"/>
+  <path class="edge data" d="M380 326 V350" marker-end="url(#arrData5)"/>
+</g>
+</svg>

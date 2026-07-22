@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 336" role="img" aria-label="Curriculum stages">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow4)}
+  .marker-dot{fill:#8A94AD;stroke:#31406A;stroke-width:1}
+  .marker-ring{fill:none;stroke:#8A94AD;stroke-width:1.5}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee{animation:march4 1.2s linear infinite}
+    @keyframes march4{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <filter id="glow4" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1100" height="336" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1099" height="335" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[4/5]</text>
+<text class="ttl" x="84" y="28">CURRICULUM — three phases, convergence-gated</text>
+
+<g transform="translate(0,48)">
+  <!-- start marker -->
+  <circle class="marker-dot" cx="24" cy="175" r="9"/>
+
+  <g>
+    <rect class="node" x="44" y="100" width="250" height="150"/>
+    <text class="n-title" x="58" y="130">MOVEMENT</text>
+    <text class="n-sub" x="58" y="155">heads — move only</text>
+    <text class="n-sub" x="58" y="177">rewards — survival channel</text>
+    <text class="n-sub" x="58" y="199">learns — dodge · navigate · survive</text>
+  </g>
+  <g>
+    <rect class="node" x="414" y="100" width="250" height="150"/>
+    <text class="n-title" x="428" y="130">COMBAT</text>
+    <text class="n-sub" x="428" y="155">heads — fire + aim · move frozen</text>
+    <text class="n-sub" x="428" y="177">rewards — combat channel</text>
+    <text class="n-sub" x="428" y="199">learns — aim · trigger · energy</text>
+  </g>
+  <g>
+    <rect class="node hot" x="784" y="100" width="250" height="150"/>
+    <rect class="marquee" x="779" y="95" width="260" height="160"/>
+    <text class="n-title" x="798" y="130">STRATEGY</text>
+    <text class="n-sub" x="798" y="155">heads — all</text>
+    <text class="n-sub" x="798" y="177">rewards — full signal · compressed</text>
+    <text class="n-sub" x="798" y="199">learns — objectives · integrated play</text>
+  </g>
+
+  <!-- end marker -->
+  <circle class="marker-ring" cx="1058" cy="175" r="11"/>
+  <circle class="marker-dot" cx="1058" cy="175" r="5"/>
+
+  <!-- transitions -->
+  <path class="edge" d="M33 175 H44" marker-end="url(#arr4)"/>
+
+  <path class="edge" d="M294 175 H414" marker-end="url(#arr4)"/>
+  <text class="elabel" x="354" y="152" text-anchor="middle">policy loss</text>
+  <text class="elabel" x="354" y="168" text-anchor="middle">plateaus</text>
+
+  <path class="edge" d="M664 175 H784" marker-end="url(#arr4)"/>
+  <text class="elabel" x="724" y="152" text-anchor="middle">policy loss</text>
+  <text class="elabel" x="724" y="168" text-anchor="middle">plateaus</text>
+
+  <path class="edge" d="M1034 175 H1047" marker-end="url(#arr4)"/>
+  <text class="elabel" x="1074" y="76" text-anchor="end">policy loss AND</text>
+  <text class="elabel" x="1074" y="92" text-anchor="end">value-EV plateau</text>
+</g>
+</svg>
