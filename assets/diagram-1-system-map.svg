@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 660" role="img" aria-label="System map — component layout">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .lane-label{font-size:10px;fill:#8A94AD;letter-spacing:2px}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-width:2;stroke-dasharray:5 4}
+  .edge.ctl{stroke:#FF5C8A;stroke-width:1.5;opacity:.85;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .elabel.ctl{fill:#FF5C8A}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow1)}
+  .node.data{stroke:#5FE3D0}
+  .node.ctl{stroke:#FF5C8A}
+  .node.dim{stroke:#26304F}
+  .lane{fill:rgba(19,24,40,.6);stroke:#232D47;stroke-width:1;stroke-dasharray:2 4}
+  .chip{fill:url(#chk1);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee{animation:march1 1.2s linear infinite}
+    @keyframes march1{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk1" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow1" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+  <marker id="arrCtl1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FF5C8A"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1080" height="660" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1079" height="659" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[1/5]</text>
+<text class="ttl" x="84" y="28">SYSTEM MAP — TS plays, Python trains, a script closes the loop</text>
+
+<g transform="translate(0,48)">
+  <rect class="lane" x="24" y="14" width="520" height="430"/>
+  <text class="lane-label" x="44" y="38">GAME SERVER · NODE / TYPESCRIPT</text>
+  <rect class="lane" x="580" y="14" width="476" height="480"/>
+  <text class="lane-label" x="600" y="38">TRAINING PIPELINE · PYTHON</text>
+  <rect class="lane" x="24" y="468" width="520" height="132"/>
+  <text class="lane-label" x="44" y="490">HUMAN REPLAY PATH · OFFLINE</text>
+
+  <!-- input column -->
+  <g>
+    <rect class="node" x="48" y="64" width="210" height="52"/>
+    <rect class="chip" x="234" y="72" width="14" height="14"/>
+    <text class="n-title" x="62" y="90">AI Manager</text>
+    <text class="n-sub" x="62" y="110">spawning · roles · tiers</text>
+  </g>
+  <g>
+    <rect class="node" x="48" y="140" width="210" height="72"/>
+    <rect class="chip" x="234" y="148" width="14" height="14"/>
+    <text class="n-title" x="62" y="166">Perception stack</text>
+    <text class="n-sub" x="62" y="186">pathfinding · tile awareness</text>
+    <text class="n-sub" x="62" y="205">map analyzer</text>
+  </g>
+  <g>
+    <rect class="node" x="48" y="252" width="210" height="72"/>
+    <rect class="chip" x="234" y="260" width="14" height="14"/>
+    <text class="n-title" x="62" y="278">Reward shaper</text>
+    <text class="n-sub" x="62" y="298">survival / combat /</text>
+    <text class="n-sub" x="62" y="317">strategy signals</text>
+  </g>
+
+  <!-- core column -->
+  <g>
+    <rect class="node ctl" x="300" y="96" width="224" height="80"/>
+    <text class="n-title" x="314" y="122">AI Controller</text>
+    <text class="n-sub" x="314" y="142">rule brain · state machine</text>
+    <text class="n-sub" x="314" y="161">objective/engage/reposition/hunt</text>
+  </g>
+  <g>
+    <rect class="node" x="300" y="210" width="224" height="76"/>
+    <rect class="chip" x="500" y="218" width="14" height="14"/>
+    <text class="n-title" x="314" y="236">RL Controller</text>
+    <text class="n-sub" x="314" y="256">pure-TS inference</text>
+    <text class="n-sub" x="314" y="275">JSON weights · no ML runtime</text>
+  </g>
+  <g>
+    <rect class="node data" x="300" y="312" width="224" height="76"/>
+    <rect class="chip" x="500" y="320" width="14" height="14"/>
+    <text class="n-title" x="314" y="338">RL Collector</text>
+    <text class="n-sub" x="314" y="358">transitions &#8594; buffer</text>
+    <text class="n-sub" x="314" y="377">.bin experience files</text>
+  </g>
+
+  <!-- pipeline column -->
+  <g>
+    <rect class="node" x="650" y="44" width="340" height="64"/>
+    <rect class="chip" x="966" y="52" width="14" height="14"/>
+    <text class="n-title" x="664" y="72">Pull + validate</text>
+    <text class="n-sub" x="664" y="92">experience corpus</text>
+  </g>
+  <g>
+    <rect class="node hot" x="650" y="140" width="340" height="64"/>
+    <rect class="marquee" x="645" y="135" width="350" height="74"/>
+    <rect class="chip" x="966" y="148" width="14" height="14"/>
+    <text class="n-title" x="664" y="168">ABI-PPO trainer</text>
+    <text class="n-sub" x="664" y="188">PyTorch · GPU</text>
+  </g>
+  <g>
+    <rect class="node ctl" x="650" y="236" width="340" height="56"/>
+    <text class="n-title" x="664" y="268">Pre-deploy sanity gate</text>
+  </g>
+  <g>
+    <rect class="node" x="650" y="324" width="340" height="64"/>
+    <rect class="chip" x="966" y="332" width="14" height="14"/>
+    <text class="n-title" x="664" y="352">Atomic deploy</text>
+    <text class="n-sub" x="664" y="372">policy + normalizer together</text>
+  </g>
+  <g>
+    <rect class="node" x="650" y="420" width="340" height="64"/>
+    <rect class="chip" x="966" y="428" width="14" height="14"/>
+    <text class="n-title" x="664" y="448">Closed-loop verify</text>
+    <text class="n-sub" x="664" y="468">checksum + reload check</text>
+  </g>
+
+  <!-- replay column -->
+  <g>
+    <rect class="node" x="60" y="502" width="210" height="64"/>
+    <rect class="chip" x="246" y="510" width="14" height="14"/>
+    <text class="n-title" x="74" y="530">.rec replay parser</text>
+    <text class="n-sub" x="74" y="550">reconstructs observation</text>
+  </g>
+  <g>
+    <rect class="node data" x="310" y="502" width="220" height="64"/>
+    <rect class="chip" x="506" y="510" width="14" height="14"/>
+    <text class="n-title" x="324" y="530">Behavior-cloning corpus</text>
+    <text class="n-sub" x="324" y="550">BC init + frozen KL anchor</text>
+  </g>
+
+  <!-- game-server internal edges -->
+  <path class="edge" d="M258 90 H288 V120 H300" marker-end="url(#arr1)"/>
+  <path class="edge" d="M258 176 H288 V150 H300" marker-end="url(#arr1)"/>
+  <path class="edge" d="M412 178 V208" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
+  <text class="elabel" x="422" y="197" text-anchor="start">advisor blend</text>
+  <path class="edge" d="M330 176 V192 H278 V344 H300" marker-end="url(#arr1)"/>
+  <path class="edge" d="M258 288 H290 V366 H300" marker-end="url(#arr1)"/>
+
+  <!-- pipeline internal edges -->
+  <path class="edge" d="M820 108 V140" marker-end="url(#arr1)"/>
+  <path class="edge" d="M820 204 V236" marker-end="url(#arr1)"/>
+  <path class="edge" d="M820 292 V324" marker-end="url(#arr1)"/>
+  <path class="edge" d="M820 388 V420" marker-end="url(#arr1)"/>
+
+  <!-- replay internal edge -->
+  <path class="edge" d="M270 534 H310" marker-end="url(#arr1)"/>
+
+  <!-- cross-lane edges -->
+  <path class="edge data" d="M412 388 V404 H610 V78 H650" marker-end="url(#arrData1)"/>
+  <text class="elabel data" x="440" y="421" text-anchor="start">.bin experience files</text>
+
+  <path class="edge" d="M650 452 H568 V300 H412 V286" marker-end="url(#arr1)"/>
+  <text class="elabel" x="460" y="296" text-anchor="start">new policy live</text>
+
+  <path class="edge data" d="M420 502 V460 H560 V172 H650" marker-end="url(#arrData1)"/>
+  <text class="elabel data" x="430" y="456" text-anchor="start">pretrain / anchor</text>
+</g>
+</svg>
