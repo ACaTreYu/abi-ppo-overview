@@ -4,10 +4,10 @@
 
 ABI-PPO is the complete AI stack behind the bots in *Arcbound* (the browser-based
 top-down multiplayer arena shooter by [ArcBound Interactive](https://arcboundinteractive.com)): a custom PPO trainer, a
-rule-based tactical brain with the neural policy blended in as an advisor, a
-zero-dependency inference engine that runs inside the game server, and a fully
-closed-loop collect → train → deploy pipeline that retrains the live policy on
-its own gameplay.
+rule-based decision layer (the Orch-OR substrate) with the neural policy holding
+bounded authority over a few action heads, a zero-dependency inference engine
+that runs inside the game server, and a closed-loop collect → train → judge →
+deploy pipeline that retrains the policy on its own gameplay.
 
 This repository overview is a public showcase of a private codebase. The
 algorithms are described at concept level; implementations remain private.
@@ -18,7 +18,7 @@ algorithms are described at concept level; implementations remain private.
 
 The project's core contribution is making PPO *work* in a setting where
 textbook PPO fails: long-horizon (~10,000-tick) episodes, sparse terminal
-rewards, and a live game server as the only environment. Eight original systems
+rewards, and a live game server as the only environment. Nine original systems
 carry that:
 
 ### 1. Decoupled Dual-Optimizer PPO
@@ -60,16 +60,23 @@ policy loss flattens, and the critic-priority phase additionally requires the
 value function's explained variance to plateau, so the long-horizon value head
 is never cut off early.
 
-### 4. Advisor-Blend Hybrid Control
-The shipped bots are not a pure neural agent. A rule-based state machine owns
-*strategy* (objectives, roles, routes) and the PPO policy rides on top as an
-*advisor* shaping moment-to-moment combat feel — strafing, dodging, aim
-micro-correction. The blend is continuous: a strategy-urgency weight decides
-how much the net's movement counts each tick, and the aim head predicts a
-*target-relative offset* (a ±90° correction around the rule layer's chosen
-target) rather than an absolute angle. Difficulty tiers scale the same
-influence dial. This yields human-feeling combat without ever letting the net
-throw a match by ignoring an objective.
+### 4. Bounded-Authority Hybrid Control
+The shipped bots are not a pure neural agent. The rules decide — which
+objective, where to go, when to commit, when to fire — and the PPO policy holds
+*bounded authority* over a few action heads. Since September 2026 the rule
+layer in every room with player-vs-player bots is a utility-scoring decision
+substrate (*Orch-OR*: candidate objectives are scored, held and committed by
+rule), released in numbered versions; the older per-role state machine drives
+only legacy bots. Which heads the policy owns is part of each release, and the
+aim head predicts a *target-relative offset* (a correction around the rule
+layer's own firing solution) rather than an absolute angle.
+
+Authority is granted only by measurement. In the current release the policy
+picks the dodge on a share of evasion windows and holds a fire bit that can
+only *add* shots to the rule layer's own; its aim offset is discarded, because
+a study across 194 maps found the re-applied offset lost rounds (46.4 %) and
+the exchange (0.89×). The net cannot throw a match by ignoring an objective,
+and it gains a head only by beating the rules at it in a controlled trial.
 
 ### 5. Map-Context Conditioning ("Map Digest")
 A compact static descriptor of the current map and mode — mode one-hot,
@@ -133,6 +140,25 @@ discourage. The term is emitted as its own experience row rather than folded
 into the terminal, because the trainer compresses large rewards and folding it in
 would have reduced it to noise beside the round-win value.
 
+### 9. Pre-Registered Head-to-Head Judging
+A trained model never ships on its loss curve. A headless harness runs the real
+server code at many times real speed, puts two models (or a model and a
+rules-only arm) on opposite squads of the same match, and swaps sides every
+match, so map, opponent and tempo are held constant inside the comparison. The
+verdict bars are written down before any result is seen: a model earns more
+authority only with at least 57 % of 200+ decisive rounds and a 95 % Wilson
+interval clear of 50 %, a damage trade at least 10 % better with no more
+deaths, and a winning share on *each* side of the map. Model-against-model
+trials call a loss only when the whole interval sits below 50 %, since two
+near-equal nets land under 50 % about half the time by chance.
+
+The same harness checks the trainer itself. In October 2026 an audit found
+that the curriculum's per-phase learning rates had applied only in each phase's
+first epoch, so every policy had trained at one rate pair; the schedule now
+holds, a tripwire stops any run whose optimizers drift off it, and an A/B of
+the designed per-phase rates against the de-facto ones on the same data tied
+in three 190-match trials, so the de-facto rates became the declared ones.
+
 **Also notable:** a self-healing deployment loop (pre-deploy sanity gate that
 mirrors the runtime's dimension guard, atomic policy + normalizer deploy so the
 two can never mismatch, checksum-verified go-live, automatic backup and
@@ -145,25 +171,27 @@ MaskablePPO approach (Huang & Ontañón, 2020) in an independent implementation.
 
 ## Status
 
-**Live in production.** The current generation (v11, 369-dimensional
-observation) ships in the game's public servers and retrains on multi-day
-collection cycles. Lifetime training ledger: **222.6 M unique transitions
-ingested** and **48.5 billion cumulative training samples** over **1,769 epochs
-across 34 training runs**, all three curriculum phases.
+**Live in production.** The public bots run Orch-OR v0.0.8 (October 2026) with
+the policy holding the bounded authority above, on a 462-float observation
+(layout v12). Lifetime training ledger as of the last production run
+(29 Sep 2026): **53 training runs**, **4,564 epochs** and **248.5 billion
+cumulative training samples**, all three curriculum phases.
 
-The version numbers — observation, reward set, experience format, corpus epoch
-and checkpoint — are deliberately held at a single shared value, after a period
-in which they had drifted to four different answers and a reward re-tune reached
-the game server without reaching the trainer that reads its data. Agreement
-between the two is now asserted rather than assumed.
+Versions — observation, reward set, experience format, corpus epoch and
+checkpoint — are kept in one table, after a period in which they had drifted to
+four different answers and a reward re-tune reached the game server without
+reaching the trainer that reads its data. Agreement between the two is now
+asserted rather than assumed: the trainer rejects experience files in a format
+it does not know, and a self-test that every training cycle runs fails when the
+trainer's reward constants differ from the server's.
 
-Movement and combat heads are strong; ongoing work targets the long-horizon
-strategy value head, the damage-ratio objective above, and a utility-scoring
-decision substrate that runs in shadow alongside the rule brain.
+Open work: giving the net a decision it can measurably improve on before
+reinforcement learning moves inside the decision substrate, side balance and
+positioning in the rule layer, and a retrain on the current skill tiers.
 
-**Stats:** Python + TypeScript · ~10 K lines of Python (trainer + pipeline)
-and ~24 K lines of TypeScript (runtime AI), plus the deployed model artifacts
-and format documentation.
+**Stats:** Python + TypeScript · ~15 K lines of Python (trainer + pipeline)
+and ~36 K lines of TypeScript (runtime AI), plus ~14 K lines of tests, the
+deployed model artifacts and format documentation.
 
 ---
 
@@ -172,8 +200,8 @@ and format documentation.
 | Area | Contents |
 |---|---|
 | Trainer | The ABI-PPO trainer: dual-optimizer PPO, reward decomposition, staged curriculum, action masking, BC anchoring |
-| Runtime | TypeScript game-server AI: rule brain, perception, pathfinding, per-opponent dodge modeling, weapon ballistics solvers, RL glue (observation encoding, inference, experience collection, reward shaping) |
-| Pipeline | Closed-loop automation: pull experience → validate → train → sanity-gate → atomic deploy → verify → rollback |
+| Runtime | TypeScript game-server AI: the Orch-OR decision substrate and its versioned arms, the legacy rule brain, perception, pathfinding, per-opponent dodge modeling, weapon ballistics solvers, RL glue (observation encoding, inference, experience collection, reward shaping) |
+| Pipeline | Closed-loop automation: pull experience → validate → train → judge → sanity-gate → atomic deploy → verify → rollback |
 | Models | The actual deployed policy, its paired observation normalizer, training checkpoints and history |
 | Docs | Architecture deep-dive, binary experience/replay format specs, training-compatibility audits |
 

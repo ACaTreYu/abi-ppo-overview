@@ -47,20 +47,20 @@
   <g>
     <rect class="node data" x="40" y="178" width="130" height="60"/>
     <rect class="chip" x="146" y="186" width="14" height="14"/>
-    <text class="n-title" x="54" y="214">obs 369</text>
+    <text class="n-title" x="54" y="214">obs 462</text>
   </g>
 
   <g>
     <rect class="node hot" x="290" y="90" width="300" height="76"/>
     <rect class="marquee" x="285" y="85" width="310" height="86"/>
     <text class="n-title" x="304" y="116">Actor trunk</text>
-    <text class="n-sub" x="304" y="136">369 &#8594; 256 &#8594; 256</text>
+    <text class="n-sub" x="304" y="136">462 &#8594; 256 &#8594; 256</text>
     <text class="n-sub" x="304" y="155">LayerNorm + ReLU</text>
   </g>
   <g>
     <rect class="node" x="290" y="250" width="300" height="76"/>
     <text class="n-title" x="304" y="276">Critic trunk</text>
-    <text class="n-sub" x="304" y="296">369 &#8594; 256 &#8594; 256</text>
+    <text class="n-sub" x="304" y="296">462 &#8594; 256 &#8594; 256</text>
     <text class="n-sub" x="304" y="315">separate weights</text>
   </g>
 

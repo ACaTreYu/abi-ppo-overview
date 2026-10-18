@@ -13,7 +13,7 @@ configuration.
 | Python | 3.9+ (the project runs current 3.x) |
 | NumPy | ≥ 1.24 — corpus loading, reward filtering, binary file parsing |
 | PyTorch | ≥ 2.0, **CUDA build** — training runs on GPU; pick the wheel matching your CUDA toolchain from pytorch.org |
-| GPU | Any recent CUDA-capable card; the network is small (two 356→256→256 MLPs), so VRAM is not the constraint — corpus size in RAM is |
+| GPU | Any recent CUDA-capable card; the network is small (two 462→256→256 MLPs), so VRAM is not the constraint — corpus size in RAM is |
 | RAM | The trainer auto-sizes its file budget to ~75% of free RAM; more RAM = more of the experience corpus per run |
 | OS | Windows or Linux both work; on Windows, force UTF-8 stdout for long unattended runs so a single log line can't kill a session |
 
@@ -81,5 +81,6 @@ python abi_ppo.py --resume <checkpoint> --phase combat --epochs 50
 python ai_training_pipeline.py --rollback
 ```
 
-Expect multi-day cadence per cycle: days of live data collection, a GPU
-training session, then an automated gated deploy.
+Expect multi-day cadence per cycle: days of data collection (live rooms or the
+headless harness), a GPU training session, a head-to-head judging run against
+the live policy, then an automated gated deploy.

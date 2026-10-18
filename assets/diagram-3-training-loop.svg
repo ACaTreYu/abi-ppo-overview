@@ -108,7 +108,7 @@
     <rect class="node hot" x="560" y="410" width="210" height="98"/>
     <rect class="marquee" x="555" y="405" width="220" height="108"/>
     <text class="n-title" x="574" y="436">Curriculum training</text>
-    <text class="n-sub" x="574" y="456">reward-ranked selection</text>
+    <text class="n-sub" x="574" y="456">seeded random selection</text>
     <text class="n-sub" x="574" y="475">3-phase curriculum</text>
     <text class="n-sub" x="574" y="494">dual optimizers</text>
   </g>

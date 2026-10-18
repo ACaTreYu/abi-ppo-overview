@@ -43,13 +43,13 @@
 <rect x="0.5" y="0.5" width="999" height="583" fill="none" stroke="#232D47"/>
 
 <text class="stp" x="20" y="28">[2/5]</text>
-<text class="ttl" x="84" y="28">CONTROL MODEL — rules own strategy, the net shapes feel</text>
+<text class="ttl" x="84" y="28">CONTROL MODEL — rules decide, the net holds bounded authority</text>
 
 <g transform="translate(0,48)">
   <g>
     <rect class="node data" x="250" y="20" width="500" height="96"/>
     <rect class="chip" x="726" y="28" width="14" height="14"/>
-    <text class="n-title" x="264" y="46">Observation — 356 floats</text>
+    <text class="n-title" x="264" y="46">Observation — 462 floats</text>
     <text class="n-sub" x="264" y="66">self · ammo · weapon economy · flags</text>
     <text class="n-sub" x="264" y="85">enemies · projectiles · teammates</text>
     <text class="n-sub" x="264" y="104">game state · tile awareness · map context</text>
@@ -57,24 +57,24 @@
 
   <g>
     <rect class="node ctl" x="120" y="190" width="320" height="76"/>
-    <text class="n-title" x="134" y="216">RULE BRAIN</text>
-    <text class="n-sub" x="134" y="236">roles · objectives · routes</text>
-    <text class="n-sub" x="134" y="255">playmaking · dodge doctrine</text>
+    <text class="n-title" x="134" y="216">RULE LAYER (Orch-OR)</text>
+    <text class="n-sub" x="134" y="236">objectives · roles · commitment</text>
+    <text class="n-sub" x="134" y="255">positioning · fire · evasion</text>
   </g>
   <g>
     <rect class="node" x="560" y="190" width="320" height="64"/>
     <rect class="chip" x="856" y="198" width="14" height="14"/>
-    <text class="n-title" x="574" y="216">PPO POLICY (advisor)</text>
+    <text class="n-title" x="574" y="216">PPO POLICY (bounded)</text>
     <text class="n-sub" x="574" y="236">move(9) · fire(2) · aim(128)</text>
   </g>
 
   <g>
     <rect class="node hot" x="300" y="340" width="400" height="96"/>
     <rect class="marquee" x="295" y="335" width="410" height="106"/>
-    <text class="n-title" x="314" y="366">Influence blend</text>
-    <text class="n-sub" x="314" y="386">urgency-weighted movement</text>
-    <text class="n-sub" x="314" y="405">aim offset around chosen target</text>
-    <text class="n-sub" x="314" y="424">fire = policy OR close-range safety</text>
+    <text class="n-title" x="314" y="366">The release arm</text>
+    <text class="n-sub" x="314" y="386">which heads the policy owns</text>
+    <text class="n-sub" x="314" y="405">dodge pick on a share of evasions</text>
+    <text class="n-sub" x="314" y="424">fire bit adds shots · aim discarded</text>
   </g>
 
   <g>
@@ -90,13 +90,13 @@
 
   <!-- rule -> blend -->
   <path class="edge ctl" d="M280 266 V300 H420 V340" marker-end="url(#arrCtl2)"/>
-  <text class="elabel ctl" x="272" y="286" text-anchor="end">strategy urgency</text>
-  <text class="elabel ctl" x="272" y="302" text-anchor="end">(high near objectives)</text>
+  <text class="elabel ctl" x="272" y="286" text-anchor="end">intent · positions</text>
+  <text class="elabel ctl" x="272" y="302" text-anchor="end">(the rules decide)</text>
 
   <!-- net -> blend -->
   <path class="edge" d="M720 254 V300 H580 V340" marker-end="url(#arr2)"/>
-  <text class="elabel" x="728" y="284" text-anchor="start">combat motion +</text>
-  <text class="elabel" x="728" y="300" text-anchor="start">target-relative aim offset</text>
+  <text class="elabel" x="728" y="284" text-anchor="start">owned heads only:</text>
+  <text class="elabel" x="728" y="300" text-anchor="start">move · fire · aim</text>
 
   <!-- blend -> out -->
   <path class="edge" d="M500 436 V470" marker-end="url(#arr2)"/>

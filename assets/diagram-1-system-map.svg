@@ -85,8 +85,8 @@
   <g>
     <rect class="node ctl" x="300" y="96" width="224" height="80"/>
     <text class="n-title" x="314" y="122">AI Controller</text>
-    <text class="n-sub" x="314" y="142">rule brain · state machine</text>
-    <text class="n-sub" x="314" y="161">objective/engage/reposition/hunt</text>
+    <text class="n-sub" x="314" y="142">Orch-OR decision substrate</text>
+    <text class="n-sub" x="314" y="161">intent · commit · posture</text>
   </g>
   <g>
     <rect class="node" x="300" y="210" width="224" height="76"/>
@@ -152,7 +152,7 @@
   <path class="edge" d="M258 90 H288 V120 H300" marker-end="url(#arr1)"/>
   <path class="edge" d="M258 176 H288 V150 H300" marker-end="url(#arr1)"/>
   <path class="edge" d="M412 178 V208" marker-start="url(#arr1)" marker-end="url(#arr1)"/>
-  <text class="elabel" x="422" y="197" text-anchor="start">advisor blend</text>
+  <text class="elabel" x="422" y="197" text-anchor="start">bounded authority</text>
   <path class="edge" d="M330 176 V192 H278 V344 H300" marker-end="url(#arr1)"/>
   <path class="edge" d="M258 288 H290 V366 H300" marker-end="url(#arr1)"/>
 
