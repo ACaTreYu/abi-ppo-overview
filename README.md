@@ -78,6 +78,18 @@ a study across 194 maps found the re-applied offset lost rounds (46.4 %) and
 the exchange (0.89×). The net cannot throw a match by ignoring an objective,
 and it gains a head only by beating the rules at it in a controlled trial.
 
+The rule layer's own firing solution was re-measured in October 2026. Against
+pilots who dodge, the shot aimed at the full intercept is the one a target
+swerves out of: in a controlled trial (same skill on both sides, 60 matches)
+leading at 0.6 of the intercept landed 2.5 more lasers per hundred and traded
+1.7× better than leading at 0.95, still won when the target's dodge was
+delayed by 400 ms (as a networked player's is), and won or tied on five more
+maps. Every skill tier now leads at 0.6. The same trials showed why a
+hindsight label — the correction that would have hit, read off the target's
+real path — cannot train the aim head here: the target reacted to the shot
+that was fired, so every other angle looks better in hindsight. Per-shot
+outcomes of randomised leads give the unbiased signal instead.
+
 ### 5. Map-Context Conditioning ("Map Digest")
 A compact static descriptor of the current map and mode — mode one-hot,
 topology flags, arena scalars, a coarse wall-density grid, objective anchor
@@ -187,7 +199,8 @@ trainer's reward constants differ from the server's.
 
 Open work: giving the net a decision it can measurably improve on before
 reinforcement learning moves inside the decision substrate, side balance and
-positioning in the rule layer, and a retrain on the current skill tiers.
+positioning in the rule layer, and an aim head trained on per-shot outcomes
+(randomised leads) rather than on hindsight geometry.
 
 **Stats:** Python + TypeScript · ~15 K lines of Python (trainer + pipeline)
 and ~36 K lines of TypeScript (runtime AI), plus ~14 K lines of tests, the
