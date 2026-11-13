@@ -183,7 +183,7 @@ MaskablePPO approach (Huang & Ontañón, 2020) in an independent implementation.
 
 ## Status
 
-**Live in production.** The public bots run Orch-OR v0.0.8 (October 2026) with
+**Live in production.** The public bots run Orch-OR v0.0.9 (November 2026) with
 the policy holding the bounded authority above, on a 462-float observation
 (layout v12). Lifetime training ledger as of the last production run
 (29 Sep 2026): **53 training runs**, **4,564 epochs** and **248.5 billion
