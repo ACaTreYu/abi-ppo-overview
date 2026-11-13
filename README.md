@@ -130,7 +130,9 @@ between movement samples. The resulting behavior-cloning corpus is used two
 ways: to initialize a fresh policy from human play, and as a *frozen KL
 anchor* — a divergence penalty toward the human-cloned reference — so PPO can
 optimize reward without drifting into inhuman play ("human ↔ optimal" as a
-single tunable knob).
+single tunable knob). The replays are now also run through the live collector
+itself, so they arrive in the current experience format and can be mixed into
+every training shard at a fixed share of the draws (8 % by default).
 
 ### 8. Round-Quality Reward Shaping
 Reward design here was outcome-based — win, kill, capture — which measured
@@ -185,8 +187,13 @@ MaskablePPO approach (Huang & Ontañón, 2020) in an independent implementation.
 
 **Live in production.** The public bots run Orch-OR v0.0.9 (November 2026) with
 the policy holding the bounded authority above, on a 462-float observation
-(layout v12). Lifetime training ledger as of the last production run
-(29 Sep 2026): **53 training runs**, **4,564 epochs** and **248.5 billion
+(layout v12). v0.0.9 is v0.0.8 plus a friendly-lane check: a bot holds a
+bouncing shot while a teammate is in its path to the target and fires lasers
+for 250 ms instead. The policy is the 18 Oct 2026 retrain, live since 19 Oct;
+before it shipped, the public arm flying it won 62.9 % of rounds against a
+rules-only arm (95 % interval 59.1–66.5 %) and traded 1.17× better with 0.86×
+the deaths. Lifetime training ledger to 29 Sep 2026 (the October runs are not
+yet folded in): **53 training runs**, **4,564 epochs** and **248.5 billion
 cumulative training samples**, all three curriculum phases.
 
 Versions — observation, reward set, experience format, corpus epoch and
@@ -216,13 +223,14 @@ deployed model artifacts and format documentation.
 | Runtime | TypeScript game-server AI: the Orch-OR decision substrate and its versioned arms, the legacy rule brain, perception, pathfinding, per-opponent dodge modeling, weapon ballistics solvers, RL glue (observation encoding, inference, experience collection, reward shaping) |
 | Pipeline | Closed-loop automation: pull experience → validate → train → judge → sanity-gate → atomic deploy → verify → rollback |
 | Models | The actual deployed policy, its paired observation normalizer, training checkpoints and history |
-| Docs | Architecture deep-dive, binary experience/replay format specs, training-compatibility audits |
+| Docs | Architecture deep-dive, a slot-by-slot observation reference, binary experience/replay format specs, training-compatibility audits |
 
 ### Trainer at a glance
 
 ```bash
 python abi_ppo.py --epochs 300 --phase all         # full 3-phase curriculum
 python abi_ppo.py --resume <checkpoint> --phase combat --epochs 50
+python abi_ppo.py --epochs 190 --shard-rotate 5    # corpus > RAM: one run, shards rotate
 python abi_ppo.py --info                           # inspect corpus + checkpoint
 ```
 

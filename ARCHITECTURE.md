@@ -39,7 +39,8 @@ is an *arm* — a set of rule components plus the list of heads the policy owns.
 - **Fire** is binary from the net and can only *add* shots to the rule layer's
   own fire decision. Weapon *selection* stays rule-based and ballistics-aware
   (line-of-sight for hitscan, bank-shot solving for bouncing projectiles, arc
-  validation for lobbed ones).
+  validation for lobbed ones, and since v0.0.9 a hold on any bouncing shot
+  with a teammate in its path).
 - Legacy bots, on the older per-role state machine, still blend the net's
   movement and aim by an influence dial scaled by difficulty tier.
 
@@ -146,9 +147,19 @@ player-vs-player bots: candidate objectives are scored and held until the world
 resolves them or a bounded strain register forces a commit, roles are assigned
 as a covering problem, and a positioning doctrine measured on human replays
 (push on an alive edge, protect a late lead, hold the round-start pad, leave the
-base unless it is pressed) sets the squad's posture. Each new component is
-measured against the previous release in the head-to-head harness before it
-ships. The older
+base unless it is pressed) sets the squad's posture. Later releases extend it
+to the fight itself. v0.0.8 (October 2026) fights an even exchange on a drained
+energy bar from 1.0–1.3× its preferred range, in bursts, and fires no
+missile beyond 220 px or at a ship already smoking; the top skill tier (the Dark Sims)
+also fights in human-paced strafes, sends the healthier of two runners on the flag
+run, and peels its escort off to cut enemies off once the carrier's way home is
+clear. v0.0.9 (November 2026)
+holds a bouncing shot while a teammate is in its flight path to the target and
+fires lasers for 250 ms instead: in server replays of one flag map the bots'
+bouncies had ended on a teammate 11.2 % of the time against the humans' 2.8 %,
+and in a 36-match trial there the share was 3.1 % with the rule against 7.9 %
+without. Each new component is measured against the previous release in the
+head-to-head harness before it ships. The older
 per-role state machine still drives legacy bots: role assignment with
 hysteresis, carrier interception that paths *ahead* of a flag carrier, per-mode
 objective doctrines, curated per-map attack lanes, per-opponent shot-angle dodge

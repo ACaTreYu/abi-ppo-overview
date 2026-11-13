@@ -14,7 +14,7 @@ configuration.
 | NumPy | ≥ 1.24 — corpus loading, reward filtering, binary file parsing |
 | PyTorch | ≥ 2.0, **CUDA build** — training runs on GPU; pick the wheel matching your CUDA toolchain from pytorch.org |
 | GPU | Any recent CUDA-capable card; the network is small (two 462→256→256 MLPs), so VRAM is not the constraint — corpus size in RAM is |
-| RAM | The trainer auto-sizes its file budget to ~75% of free RAM; more RAM = more of the experience corpus per run |
+| RAM | The pipeline sizes the trainer's file budget to a share of free RAM (~75% for a one-shot load); a corpus larger than memory is trained in one run with the resident shard rotating, so more RAM = bigger shards, not more of the corpus |
 | OS | Windows or Linux both work; on Windows, force UTF-8 stdout for long unattended runs so a single log line can't kill a session |
 
 The dependency surface is deliberately tiny — NumPy + PyTorch is the entire
@@ -76,6 +76,9 @@ python ai_training_pipeline.py --once
 # targeted trainer runs
 python abi_ppo.py --epochs 300 --phase all
 python abi_ppo.py --resume <checkpoint> --phase combat --epochs 50
+
+# one bounded run over a corpus larger than RAM: the resident shard rotates every 5 epochs
+python abi_ppo.py --epochs 190 --phase all --shard-rotate 5 --shard-files 150
 
 # restore the previous policy and make it live
 python ai_training_pipeline.py --rollback
