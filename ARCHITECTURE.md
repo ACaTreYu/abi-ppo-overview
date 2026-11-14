@@ -40,7 +40,8 @@ is an *arm* — a set of rule components plus the list of heads the policy owns.
   own fire decision. Weapon *selection* stays rule-based and ballistics-aware
   (line-of-sight for hitscan, bank-shot solving for bouncing projectiles, arc
   validation for lobbed ones, and since v0.0.9 a hold on any bouncing shot
-  with a teammate in its path).
+  with a teammate in its path; since v0.0.10 the same for missiles and for the
+  first shot of a laser volley).
 - Legacy bots, on the older per-role state machine, still blend the net's
   movement and aim by an influence dial scaled by difficulty tier.
 
@@ -158,7 +159,16 @@ holds a bouncing shot while a teammate is in its flight path to the target and
 fires lasers for 250 ms instead: in server replays of one flag map the bots'
 bouncies had ended on a teammate 11.2 % of the time against the humans' 2.8 %,
 and in a 36-match trial there the share was 3.1 % with the rule against 7.9 %
-without. Each new component is measured against the previous release in the
+without. v0.0.10 (November 2026) is aimed at play that humans can beat and read,
+not at perfect play. Its carriers drop the flag by choice with the chance human
+pilots show in server replays of that map (11,771 carries): per half second about
+2 % with one enemy pressing, 6.5 % with two, 11.6 % with three or more, flat in
+health, and never with no enemy close, where the older rule also dropped before
+a retreat. Against v0.0.9 over 85 matches it won 59.5 % of rounds (54.0-64.8 %)
+with an even trade and dropped 4.4 times a match instead of 7.6. Its mate lane
+holds a missile, or the first shot of a laser volley, while a teammate is in the
+path: lasers ending on a teammate fell from 6.0 % to 4.7 % and missiles from 4.4 %
+to 0.6 %. Each new component is measured against the previous release in the
 head-to-head harness before it ships. The older
 per-role state machine still drives legacy bots: role assignment with
 hysteresis, carrier interception that paths *ahead* of a flag carrier, per-mode

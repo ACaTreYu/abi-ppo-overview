@@ -185,11 +185,14 @@ MaskablePPO approach (Huang & Ontañón, 2020) in an independent implementation.
 
 ## Status
 
-**Live in production.** The public bots run Orch-OR v0.0.9 (November 2026) with
+**Live in production.** The public bots run Orch-OR v0.0.10 (November 2026) with
 the policy holding the bounded authority above, on a 462-float observation
-(layout v12). v0.0.9 is v0.0.8 plus a friendly-lane check: a bot holds a
-bouncing shot while a teammate is in its path to the target and fires lasers
-for 250 ms instead. The policy is the 18 Oct 2026 retrain, live since 19 Oct;
+(layout v12). v0.0.9 added a friendly-lane check: a bot holds a bouncing shot
+while a teammate is in its path to the target and fires lasers for 250 ms
+instead. v0.0.10 adds two more rules meant to make the bots play more like
+people: a flag carrier drops the flag by choice the way human pilots do (by how
+many enemies press it, never on a clear run home), and no missile, nor the first
+shot of a laser volley, goes out through a teammate. The policy is the 18 Oct 2026 retrain, live since 19 Oct;
 before it shipped, the public arm flying it won 62.9 % of rounds against a
 rules-only arm (95 % interval 59.1–66.5 %) and traded 1.17× better with 0.86×
 the deaths. Lifetime training ledger to 29 Sep 2026 (the October runs are not
