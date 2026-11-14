@@ -167,8 +167,8 @@ health, and never with no enemy close, where the older rule also dropped before
 a retreat. Against v0.0.9 over 85 matches it won 59.5 % of rounds (54.0-64.8 %)
 with an even trade and dropped 4.4 times a match instead of 7.6. Its mate lane
 holds a missile, or the first shot of a laser volley, while a teammate is in the
-path: lasers ending on a teammate fell from 6.0 % to 4.7 % and missiles from 4.4 %
-to 0.6 %. Each new component is measured against the previous release in the
+path: over 85 matches lasers ending on a teammate fell from 6.2 % to 4.8 % and
+missiles from 4.2 % to 1.0 %, with an even trade. Each new component is measured against the previous release in the
 head-to-head harness before it ships. The older
 per-role state machine still drives legacy bots: role assignment with
 hysteresis, carrier interception that paths *ahead* of a flag carrier, per-mode
